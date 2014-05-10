@@ -1,4 +1,4 @@
-koa-better-limit
+koa-better-ratelimit
 ================
 
 Better, smaller, fastter. KoaJS middleware for limit request by ip, store in-memory.
@@ -6,11 +6,11 @@ Better, smaller, fastter. KoaJS middleware for limit request by ip, store in-mem
 ## Install
 
 ```
-npm install koa-better-limit
+npm install koa-better-ratelimit
 ```
 
 ## Options
-Initialize koa-better-limit middleware with the given `options`:
+Initialize koa-better-ratelimit middleware with the given `options`:
 - **duration** limit duration in seconds, defaults to `3600` seconds (1 hour)
 - **max** max requests per `ip`, defaults to `500`
 - **whiteList** array of all ips that won't be limited
@@ -41,7 +41,7 @@ console.log('Koa server start listening on port ' + port);
 ```
 
 ## Diferences
-#### Between [koa-better-limit](https://github.com/tunnckoCore/koa-better-limit) and [koa-ratelimit](https://github.com/koajs/ratelimit)
+#### Between [koa-better-ratelimit](https://github.com/tunnckoCore/koa-better-ratelimit) and [koa-ratelimit](https://github.com/koajs/ratelimit)
 - Support blackList and whiteList options
 - Pure in-memory store, no other adapters
 - `duration` option in seconds, not in milliseconds
@@ -50,7 +50,7 @@ console.log('Koa server start listening on port ' + port);
 - added `Retry-After` header
 - added separate 403 and 429 option messages
 
-#### Between [koa-better-limit](https://github.com/tunnckoCore/koa-better-limit) and [koa-limit](https://github.com/koajs/koa-limit)
+#### Between [koa-better-ratelimit](https://github.com/tunnckoCore/koa-better-ratelimit) and [koa-limit](https://github.com/koajs/koa-limit)
 - koa-limit [is totally broken](https://github.com/koajs/koa-limit/issues/3#issuecomment-42731409) (to v1.0.1)
 - removed `redis` and test dependencies
 - smaller, better, working, simple

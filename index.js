@@ -1,5 +1,5 @@
 /*!
- * koa-better-limit
+ * koa-better-ratelimit
  * Copyright(c) 2014 Charlike Mike Reagent (@tunnckoCore) <mameto_100@mail.com>
  * MIT Licensed
  */
@@ -11,7 +11,7 @@
  */
 
 var ipchecker = require('ipchecker')
-  , debug     = require('debug')('koa-better-limit')
+  , debug     = require('debug')('koa-better-ratelimit')
   , copy      = require('copy-to')
   , ms        = require('ms');
 
@@ -31,7 +31,7 @@ var defaultOptions = {
 module.exports = betterlimit;
 
 /**
- * Initialize koa-better-limit middleware with the given `options`:
+ * Initialize koa-better-ratelimit middleware with the given `options`:
  * 
  * - `duration` limit duration in seconds, defaults to `3600` seconds (1 hour)
  * - `max` max requests per `ip`, defaults to `500`
