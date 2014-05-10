@@ -1,9 +1,16 @@
 {
   "name": "koa-better-ratelimit",
   "description": "Better, smaller, fastter. KoaJS requests rate limitter middleware, in-memory.",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "files": [
-    "index.js"
+    "index.js",
+    "example.js",
+    "test/koa-better-ratelimit.js",
+    "README.md",
+    "LICENSE",
+    "Makefile",
+    ".gitignore",
+    ".npmignore"
   ],
   "scripts": {
     "start": "make start",
