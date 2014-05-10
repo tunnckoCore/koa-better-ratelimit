@@ -1,6 +1,6 @@
 /*!
  * koa-better-limit
- * Copyright(c) 2014 @tunnckoCore <mameto_100@mail.com>
+ * Copyright(c) 2014 Charlike Mike Reagent (@tunnckoCore) <mameto_100@mail.com>
  * MIT Licensed
  */
 
@@ -25,15 +25,15 @@ var defaultOptions = {
 };
 
 /**
- * Expose `ratelimit()`.
+ * Expose `betterlimit()`.
  */
 
-module.exports = ratelimit;
+module.exports = betterlimit;
 
 /**
- * Initialize ratelimit middleware with the given `opts`:
+ * Initialize betterlimit middleware with the given `options`:
  * 
- * - `duration` limit duration in seconds, defaults 3600 secdons (1 hour)
+ * - `duration` limit duration in seconds, defaults to 3600 secdons (1 hour)
  * - `max` max requests per `ip`, defaults to 500
  * - `whiteList` array of all ips that won't be limited
  * - `blackList` array of all ips that always be limited and 403
@@ -45,7 +45,7 @@ module.exports = ratelimit;
  * @api public
  */
 
-function ratelimit(options) {
+function betterlimit(options) {
   options = options || {};
 
   var db = [];

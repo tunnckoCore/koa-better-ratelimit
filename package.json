@@ -2,7 +2,7 @@
   "name": "koa-better-limit",
   "description": "Better, smaller, fastter. KoaJS requests rate limitter middleware, in-memory.",
   "repository": "tunnckoCore/koa-better-limit",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "files": [
     "index.js"
   ],
