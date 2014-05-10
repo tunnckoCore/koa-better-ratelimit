@@ -1,5 +1,5 @@
 var app = require('koa')()
-  , limit = require('koa-better-limit');
+  , limit = require('./index');
 
 app.use(limit({
   duration: 3 * 60, //3 mins
@@ -12,5 +12,6 @@ app.use(function * (next) {
   yield next;
 });
 
+var port = process.env.PORT || 3333;
 app.listen(3333);
-console.log('listening on port 3333');
+console.log('Koa server start listening on port ' + port);

@@ -31,10 +31,10 @@ var defaultOptions = {
 module.exports = betterlimit;
 
 /**
- * Initialize betterlimit middleware with the given `options`:
+ * Initialize koa-better-limit middleware with the given `options`:
  * 
- * - `duration` limit duration in seconds, defaults to 3600 secdons (1 hour)
- * - `max` max requests per `ip`, defaults to 500
+ * - `duration` limit duration in seconds, defaults to `3600` seconds (1 hour)
+ * - `max` max requests per `ip`, defaults to `500`
  * - `whiteList` array of all ips that won't be limited
  * - `blackList` array of all ips that always be limited and 403
  * - `message_429` message for all requests after limit
