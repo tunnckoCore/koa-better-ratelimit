@@ -1,4 +1,4 @@
-TESTS = test/koa-better-limit.js
+TESTS = test.js
 REPORTER = spec
 TIMEOUT = 3000
 MOCHA_OPTS =
