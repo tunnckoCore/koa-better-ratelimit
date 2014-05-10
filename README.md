@@ -1,7 +1,7 @@
 koa-better-ratelimit
 ================
 
-Better, smaller, fastter. KoaJS middleware for limit request by ip, store in-memory.
+Better, smaller, tested, working. KoaJS middleware for limit request by ip, store in-memory.
 
 ## Install
 
