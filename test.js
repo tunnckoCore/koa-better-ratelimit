@@ -1,5 +1,5 @@
 var koa = require('koa');
-var limit = require('../index');
+var limit = require('./index');
 var assert = require('assert');
 var request = require('supertest');
 var http = require('http');
