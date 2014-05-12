@@ -1,4 +1,4 @@
-koa-better-ratelimit
+koa-better-ratelimit [![Build Status](https://travis-ci.org/tunnckoCore/koa-better-ratelimit.png)](https://travis-ci.org/tunnckoCore/koa-better-ratelimit)
 ================
 
 Better, smaller, tested, working. KoaJS middleware for limit request by ip, store in-memory.
