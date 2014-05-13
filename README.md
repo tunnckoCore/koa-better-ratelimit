@@ -1,5 +1,8 @@
-koa-better-ratelimit [![Build Status](https://travis-ci.org/tunnckoCore/koa-better-ratelimit.png)](https://travis-ci.org/tunnckoCore/koa-better-ratelimit) [![Dependencies Status](https://david-dm.org/tunnckoCore/koa-better-ratelimit/status.svg)](https://david-dm.org/tunnckoCore/koa-better-ratelimit)
-================
+# koa-better-ratelimit
+
+[![Build Status](https://travis-ci.org/tunnckoCore/koa-better-ratelimit.png)](https://travis-ci.org/tunnckoCore/koa-better-ratelimit) [![Dependencies Status](https://david-dm.org/tunnckoCore/koa-better-ratelimit/status.svg)](https://david-dm.org/tunnckoCore/koa-better-ratelimit)
+[![Code Climate](https://codeclimate.com/github/tunnckoCore/koa-better-ratelimit.png)](https://codeclimate.com/github/tunnckoCore/koa-better-ratelimit)
+[![Koa-based package](http://img.shields.io/badge/koa-0.6.1-brightgreen.svg)](https://github.com/koajs/koa)
 
 Better, smaller, tested, working. KoaJS middleware for limit request by ip, store in-memory.
 
