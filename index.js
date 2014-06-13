@@ -12,16 +12,15 @@
 
 var ipchecker = require('ipchecker')
   , debug     = require('debug')('koa-better-ratelimit')
-  , copy      = require('copy-to')
-  , ms        = require('ms');
+  , copy      = require('copy-to');
 
 var defaultOptions = {
   duration: 3600,
   max: 500,
   whiteList: [],
   blackList: [],
-  message_429: '429: Too Many Requests',
-  message_403: '403: This is forbidden area for you',
+  message_429: '429: Too Many Requests.',
+  message_403: '403: This is forbidden area for you.',
 };
 
 /**
@@ -48,16 +47,17 @@ module.exports = betterlimit;
 function betterlimit(options) {
   options = options || {};
 
-  var db = [];
+  var db = {}, that;
 
   copy(defaultOptions).to(options);
 
   var whiteListMap = ipchecker.map(options.whiteList);
   var blackListMap = ipchecker.map(options.blackList);
+  
 
-  return function *(next) {
-    var ip = this.ip;
-
+  return function *ratelimit(next) {
+    var ip = this.request.header['x-koaip'] || this.ip;
+    
     if (!ip) {
       debug('can not get ip for the request');
       return yield *next;
@@ -79,53 +79,34 @@ function betterlimit(options) {
       return yield *next;
     }
 
-
     this.set('X-RateLimit-Limit', options.max);
 
-    // check exists in db
-    if (db.length <= 0) {
-      db.push({ip: ip, start: now, reset: now+options.duration, limit: options.max});
-      db[0].limit--;
-      this.set('X-RateLimit-Remaining', db[0].limit);
-      this.set('X-RateLimit-Reset', db[0].reset);
-
-      debug('request ip %s not exists in in-memory db... added', ip);
-      yield next;
+    if (isEmpty(db) || !db.hasOwnProperty(ip)) {
+      that = db[ip] = {ip: ip, start: now, reset: now+options.duration, limit: options.max}
+      debug('adds %s to database', ip);
     } else {
-      if (db[0].ip == ip) {
-        debug('request ip: %s exists in in-memory db', ip);
+      debug('get %s from database', ip);
+      that = db[ip];
+    }
 
-        if (now > db[0].reset) {
-          db[0].limit = limit-1;
-          db[0].start = now;
-          db[0].reset = now+options.duration;
-          this.set('X-RateLimit-Remaining', db[0].limit);
-          this.set('X-RateLimit-Reset', db[0].reset);
+    if (that.limit + options.max !== options.max && now < that.reset) {
+      that.limit = that.limit-1;
+      this.set('X-RateLimit-Remaining', that.limit);
+      this.set('X-RateLimit-Reset', that.reset);
 
-          debug('reset rate limit after duration %s', options.duration);
-          debug('and X-RateLimit-Reset now is %s', db[0].reset);
-          yield next;
-        } else {
-          if (db[0].limit <= 0) {
-            var retryAfter = db[0].reset-now;
-            var rertryIn = ms(retryAfter*1000, {long: true});
-            this.set('X-RateLimit-Remaining', 0);
-            this.set('X-RateLimit-Reset', db[0].reset);
-            this.set('Retry-After', retryAfter);
-            this.status = 429;
-            this.body = options.message_429 + '. Retry in ' + ms(retryAfter*1000, {long: true});
-
-            debug('request of %s is limited. retry in %s', ip, rertryIn);
-          } else {
-            db[0].limit--;
-            this.set('X-RateLimit-Remaining', db[0].limit);
-            this.set('X-RateLimit-Reset', db[0].reset);
-
-            debug('request: %s, remaining %s requests', ip, db[0].limit);
-            yield next;
-          }
-        }
-      }
+      debug('ip %s have access', ip);
+      return yield *next;
+    } else {
+      this.status = 429;
+      this.body = options.message_429;
+      this.set('Retry-After', that.reset-now);
+      this.set('X-RateLimit-Remaining', 0);
+      this.set('X-RateLimit-Reset', that.reset);
+      debug('ip %s don`t have access, until %s', ip, that.reset);
     }
   }
+}
+
+function isEmpty(value){
+  return Boolean(value && typeof value == 'object') && !Object.keys(value).length;
 }

@@ -6,7 +6,8 @@ var http = require('http');
 
 
 function *hello() {
-  this.body = 'Hello Test!';
+  this.set('content-type', 'text/html')
+  this.body = '<p>Hello test.</p>';
 }
 
 /**
@@ -28,7 +29,7 @@ appNonDefault = http.createServer(appNonDefault.callback());
  */
 var appBlack = koa();
 appBlack.use(limit({
-  blackList: ['127.0.0.*'],
+  blackList: ['4.4.1.*'],
   message_403: 'access forbidden, please contact foo@bar.com'
 }));
 appBlack.use(hello);
@@ -51,59 +52,138 @@ appWhite = http.createServer(appWhite.callback());
 
 
 describe('appNonDefault', function () {
-  it('should request 200 OK - first request', function (done) {
+  it('should status 200 - 1.2.3.4 - remaining 2/3', function (done) {
     request(appNonDefault)
     .get('/')
-    .expect('Hello Test!')
-    .expect(200, done);
+    .set('x-koaip', '1.2.3.4')
+    .expect(200)
+    .expect('X-RateLimit-Limit', '3')
+    .expect('X-RateLimit-Remaining', '2')
+    .end(function(err, res) {
+      res.text.should.equal('<p>Hello test.</p>');
+      done();
+    });
   });
-  it('should 200 OK - X-RateLimit-Remaining 1 of 3', function (done) {
+  it('should status 200 - 1.2.3.4 - remaining 1/3', function (done) {
     request(appNonDefault)
     .get('/')
-    .expect('Hello Test!')
-    .expect(200, done);
+    .set('x-koaip', '1.2.3.4')
+    .expect(200)
+    .expect('X-RateLimit-Limit', '3')
+    .expect('X-RateLimit-Remaining', '1')
+    .end(function(err, res) {
+      res.text.should.equal('<p>Hello test.</p>');
+      done();
+    });
   });
-  it('should request 200 OK - third request', function (done) {
+  it('should status 200 - 1.2.3.4 - remaining 0/3', function (done) {
     request(appNonDefault)
     .get('/')
-    .expect('Hello Test!')
-    .expect(200, done);
-  });
-  it('should request 429 Too Many Requests', function (done) {
-    request(appNonDefault)
-    .get('/')
-    .expect('429: Too Many Requests. Retry in 1 minute')
-    .expect(429, done);
-  });
-  it('should request 429 - X-RateLimit-Remaining 0 of 3', function (done) {
-    request(appNonDefault)
-    .get('/')
+    .set('x-koaip', '1.2.3.4')
+    .expect(200)
     .expect('X-RateLimit-Limit', '3')
     .expect('X-RateLimit-Remaining', '0')
-    .expect(429, done);
-  });
-  setTimeout(function () {
-    it('should 200 OK - after duration restart rates', function (done) {
-      request(appNonDefault)
-      .get('/')
-      .expect(200, done);
+    .end(function(err, res) {
+      res.text.should.equal('<p>Hello test.</p>');
+      done();
     });
-  }, (60*1000*1)+500);
+  });
+  it('should status 429 - 1.2.3.4 - remaining 0/3 /1', function (done) {
+    request(appNonDefault)
+    .get('/')
+    .set('x-koaip', '1.2.3.4')
+    .expect(429)
+    .expect('X-RateLimit-Limit', '3')
+    .expect('X-RateLimit-Remaining', '0')
+    .end(function(err, res) {
+      res.text.should.equal('429: Too Many Requests.');
+      done();
+    });
+  });
+  it('should status 200 - 8.8.8.8 - remaining 2/3', function (done) {
+    request(appNonDefault)
+    .get('/')
+    .set('x-koaip', '8.8.8.8')
+    .expect(200)
+    .expect('X-RateLimit-Limit', '3')
+    .expect('X-RateLimit-Remaining', '2')
+    .end(function(err, res) {
+      res.text.should.equal('<p>Hello test.</p>');
+      done();
+    });
+  });
+  it('should status 200 - 8.8.8.8 - remaining 1/3', function (done) {
+    request(appNonDefault)
+    .get('/')
+    .set('x-koaip', '8.8.8.8')
+    .expect(200)
+    .expect('X-RateLimit-Limit', '3')
+    .expect('X-RateLimit-Remaining', '1')
+    .end(function(err, res) {
+      res.text.should.equal('<p>Hello test.</p>');
+      done();
+    });
+  });
+  it('should status 429 - 1.2.3.4 - remaining 0/3 /2', function (done) {
+    request(appNonDefault)
+    .get('/')
+    .set('x-koaip', '1.2.3.4')
+    .expect(429)
+    .expect('X-RateLimit-Limit', '3')
+    .expect('X-RateLimit-Remaining', '0')
+    .end(function(err, res) {
+      res.text.should.equal('429: Too Many Requests.');
+      done();
+    });
+  });
+  it('should status 200 - 8.8.8.8 - remaining 0/3', function (done) {
+    request(appNonDefault)
+    .get('/')
+    .set('x-koaip', '8.8.8.8')
+    .expect(200)
+    .expect('X-RateLimit-Limit', '3')
+    .expect('X-RateLimit-Remaining', '0')
+    .end(function(err, res) {
+      res.text.should.equal('<p>Hello test.</p>');
+      done();
+    });
+  });
+  it('should status 429 - 8.8.8.8 - remaining 0/3', function (done) {
+    request(appNonDefault)
+    .get('/')
+    .set('x-koaip', '8.8.8.8')
+    .expect(429)
+    .expect('X-RateLimit-Limit', '3')
+    .expect('X-RateLimit-Remaining', '0')
+    .end(function(err, res) {
+      res.text.should.equal('429: Too Many Requests.');
+      done();
+    });
+  });
 });
 
 describe('appBlackList', function () {
-  it('should request 403 forbidden - blackList', function (done) {
+  it('should 403 Forbidden - blackList', function (done) {
     request(appBlack)
     .get('/')
-    .expect('access forbidden, please contact foo@bar.com')
-    .expect(403, done);
+    .set('x-koaip', '4.4.1.8')
+    .expect(403)
+    .end(function(err, res) {
+      res.text.should.equal('access forbidden, please contact foo@bar.com');
+      done();
+    });
   });
 });
 
 describe('appWhiteList', function () {
-  it('should request 200 OK - whiteList - no limits', function (done) {
+  it('should 200 OK - whiteList - no limits', function (done) {
     request(appWhite)
     .get('/')
-    .expect(200, done);
+    .set('x-koaip', '127.0.4.4')
+    .expect(200)
+    .end(function(err, res) {
+      res.text.should.equal('<p>Hello test.</p>');
+      done();
+    });
   });
 });
