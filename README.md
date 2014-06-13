@@ -4,7 +4,7 @@ koa-better-ratelimit
 [![Build Status](https://travis-ci.org/tunnckoCore/koa-better-ratelimit.png)](https://travis-ci.org/tunnckoCore/koa-better-ratelimit) [![Dependencies Status](https://david-dm.org/tunnckoCore/koa-better-ratelimit/status.svg)](https://david-dm.org/tunnckoCore/koa-better-ratelimit)
 [![Koa-based package](http://img.shields.io/badge/koa-0.6.1-brightgreen.svg)](https://github.com/koajs/koa)
 
-Better, smaller, fastter. KoaJS middleware for limit request by ip, store in-memory.
+Better, smaller, faster, tested. KoaJS middleware for limit request by ip, store in-memory.
 
 ## Install
 
@@ -49,7 +49,7 @@ console.log('Koa server start listening on port ' + port);
 - Support blackList and whiteList options
 - Pure in-memory store, no other adapters
 - `duration` option in seconds, not in milliseconds
-- 7 working tests
+- 11 working tests
 - removed `db` option
 - added `Retry-After` header
 - added separate 403 and 429 option messages
@@ -61,11 +61,12 @@ console.log('Koa server start listening on port ' + port);
 - added separate 403 and 429 option messages
 
 
-## Test & Example
-First run `npm install` before running tests to install devDependencies: mocha, supertest, should, koa.
+## Test, Example
+First run `npm install` before run anything.
 ```
 npm install
 npm test
+DEBUG=koa-better-ratelimit npm test
 ```
 or view examaple
 ```
@@ -73,26 +74,12 @@ npm install
 npm start
 ```
 
+## Credit
 
-## MIT LICENSE
-The MIT License (MIT)
+|[![Charlike Mike Reagent](https://avatars2.githubusercontent.com/u/5038030?s=120)](https://github.com/tunnckoCore)|
+|---|
+|[George Yanev](https://github.com/tunnckoCore) (creator, npm)|
 
-Copyright (c) 2014 [Charlike Mike Reagent](https://github.com/tunnckoCore) ([@tunnckoCore](https://twitter.com/tunnckoCore))
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+## License
+The MIT License (MIT) [@tunnckoCore](https://twitter.com/tunnckoCore)
