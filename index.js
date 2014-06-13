@@ -38,6 +38,7 @@ module.exports = betterlimit;
  * - `blackList` array of all ips that always be limited and 403
  * - `message_429` message for all requests after limit
  * - `message_403` message for limited/forbidden 403
+ * - `env` managing the enviroment, for tests will use `x-koaip` header
  *
  * @param {Object} options
  * @return {Function}
@@ -56,7 +57,7 @@ function betterlimit(options) {
   
 
   return function *ratelimit(next) {
-    var ip = this.request.header['x-koaip'] || this.ip;
+    var ip = options.env === 'test' ? this.request.header['x-koaip'] : this.ip;
     
     if (!ip) {
       debug('can not get ip for the request');

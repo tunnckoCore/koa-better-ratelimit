@@ -17,7 +17,8 @@ function *hello() {
 var appNonDefault = koa();
 appNonDefault.use(limit({
   duration: 1 * 60, //1 min
-  max: 3 //max requests
+  max: 3, //max requests
+  env: 'test'
 }));
 appNonDefault.use(hello);
 appNonDefault = http.createServer(appNonDefault.callback());
@@ -30,7 +31,8 @@ appNonDefault = http.createServer(appNonDefault.callback());
 var appBlack = koa();
 appBlack.use(limit({
   blackList: ['4.4.1.*'],
-  message_403: 'access forbidden, please contact foo@bar.com'
+  message_403: 'access forbidden, please contact foo@bar.com',
+  env: 'test'
 }));
 appBlack.use(hello);
 appBlack = http.createServer(appBlack.callback());
@@ -43,13 +45,11 @@ appBlack = http.createServer(appBlack.callback());
 var appWhite = koa();
 appWhite.use(limit({
   whiteList: ['127.0.*.*'],
-  max: 50
+  max: 50,
+  env: 'test'
 }));
 appWhite.use(hello);
 appWhite = http.createServer(appWhite.callback());
-
-
-
 
 describe('appNonDefault', function () {
   it('should status 200 - 1.2.3.4 - remaining 2/3', function (done) {
