@@ -1,3 +1,11 @@
+/**
+ * koa-better-ratelimit - test.js
+ * Copyright(c) 2014
+ * MIT Licensed
+ *
+ * @author  Charlike Mike Reagent (@tunnckoCore)
+ * @api private
+ */
 var koa = require('koa');
 var limit = require('./index');
 var assert = require('assert');
@@ -16,7 +24,7 @@ function *hello() {
  */
 var appNonDefault = koa();
 appNonDefault.use(limit({
-  duration: 1 * 60, //1 min
+  duration: 1000 * 60, //1 min
   max: 3, //max requests
   env: 'test'
 }));

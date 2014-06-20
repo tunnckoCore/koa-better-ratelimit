@@ -4,7 +4,7 @@ TIMEOUT = 3000
 MOCHA_OPTS =
 
 test:
-	@NODE_ENV=test ./node_modules/mocha/bin/mocha \
+	node_modules/mocha/bin/mocha \
 		--harmony-generators \
 		--reporter $(REPORTER) \
 		--timeout $(TIMEOUT) \

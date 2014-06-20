@@ -1,24 +1,20 @@
 {
   "name": "koa-better-ratelimit",
-  "description": "Better, smaller, fastter. KoaJS requests rate limitter middleware, in-memory.",
-  "version": "0.0.7",
-  "files": [
-    "index.js",
-    "example.js",
-    "test.js",
-    "README.md",
-    "LICENSE",
-    "Makefile",
-    ".gitignore",
-    ".npmignore"
-  ],
+  "version": "0.1.0",
+  "description": "Better, smaller, faster. KoaJS requests rate limiter middleware, with in-memory store/db.",
   "scripts": {
     "start": "make start",
     "test": "make test"
   },
+  "author": {
+    "name": "Charlike Mike Reagent",
+    "email": "mameto_100@mail.bg",
+    "url": "http://www.whistle-bg.tk",
+    "twitter": "tunnckoCore"
+  },
   "repository": {
     "type": "git",
-    "url": "https://github.com/tunnckoCore/koa-better-ratelimit"
+    "url": "git://github.com/tunnckoCore/gulp-j140.git"
   },
   "keywords": [
     "koa",
@@ -30,16 +26,27 @@
     "memorystore",
     "rate"
   ],
+  "files": [
+    ".gitignore",
+    ".npmignore",
+    ".travis.yml",
+    "LICENSE",
+    "Makefile",
+    "README.md",
+    "example.js",
+    "index.js",
+    "test.js"
+  ],
   "dependencies": {
-    "debug": "~0.8.1",
-    "copy-to": "1.0.1",
-    "ipchecker": "0.0.2"
+    "debug": ">=1.0.2",
+    "copy-to": "~1.0.1",
+    "ipchecker": "~0.0.2"
   },
   "devDependencies": {
-    "koa": "*",
-    "mocha": "*",
-    "should": "*",
-    "supertest": "~0.12.1"
+    "koa": ">=0.8.0",
+    "mocha": "~1.20.1",
+    "should": "~4.0.4",
+    "supertest": "~0.13.0"
   },
   "license": "MIT"
 }

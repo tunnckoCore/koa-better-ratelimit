@@ -1,8 +1,16 @@
-var app = require('koa')()
-  , limit = require('./index');
+/**
+ * koa-better-ratelimit - example.js
+ * Copyright(c) 2014
+ * MIT Licensed
+ *
+ * @author  Charlike Mike Reagent (@tunnckoCore)
+ * @api private
+ */
+var app   = require('koa')(),
+    limit = require('./index');
 
 app.use(limit({
-  duration: 3 * 60, //3 mins
+  duration: 1000 * 60 * 3, //3 mins
   max: 5,
   //blackList: ['127.0.0.1']
 }));

@@ -1,7 +1,10 @@
-/*!
- * koa-better-ratelimit
- * Copyright(c) 2014 Charlike Mike Reagent (@tunnckoCore) <mameto_100@mail.com>
+/**
+ * koa-better-ratelimit - index.js
+ * Copyright(c) 2014
  * MIT Licensed
+ *
+ * @author  Charlike Mike Reagent (@tunnckoCore)
+ * @api private
  */
 
 'use strict';
@@ -10,17 +13,18 @@
  * Module dependencies.
  */
 
-var ipchecker = require('ipchecker')
-  , debug     = require('debug')('koa-better-ratelimit')
-  , copy      = require('copy-to');
+var ipchecker = require('ipchecker'),
+    debug     = require('debug')('koa-better-ratelimit'),
+    copy      = require('copy-to');
 
 var defaultOptions = {
-  duration: 3600,
-  max: 500,
+  duration: 1000 * 60 * 60 * 24,
   whiteList: [],
   blackList: [],
   message_429: '429: Too Many Requests.',
   message_403: '403: This is forbidden area for you.',
+  max: 500,
+  env: null
 };
 
 /**
@@ -30,21 +34,13 @@ var defaultOptions = {
 module.exports = betterlimit;
 
 /**
- * Initialize koa-better-ratelimit middleware with the given `options`:
+ * With options through init you can control
+ * black/white lists, limit per ip and reset interval.
  * 
- * - `duration` limit duration in seconds, defaults to `3600` seconds (1 hour)
- * - `max` max requests per `ip`, defaults to `500`
- * - `whiteList` array of all ips that won't be limited
- * - `blackList` array of all ips that always be limited and 403
- * - `message_429` message for all requests after limit
- * - `message_403` message for limited/forbidden 403
- * - `env` managing the enviroment, for tests will use `x-koaip` header
- *
  * @param {Object} options
- * @return {Function}
+ * @see https://github.com/tunnckoCore/koa-better-ratelimit#options
  * @api public
  */
-
 function betterlimit(options) {
   options = options || {};
 
@@ -64,9 +60,9 @@ function betterlimit(options) {
       return yield *next;
     }
 
-    var now = Math.round(+new Date()/1000);
+    var now = (Date.now() / 1000) | 0; //in sec
+    var reset = now + ((options.duration / 1000) | 0)
 
-    // check black list
     if (ipchecker.check(ip, blackListMap)) {
       debug('request ip: %s is in the blackList', ip);
       this.status = 403;
@@ -74,7 +70,6 @@ function betterlimit(options) {
       return;
     }
 
-    // check white list
     if (ipchecker.check(ip, whiteListMap)) {
       debug('request ip: %s is in the whiteList', ip);
       return yield *next;
@@ -83,7 +78,7 @@ function betterlimit(options) {
     this.set('X-RateLimit-Limit', options.max);
 
     if (isEmpty(db) || !db.hasOwnProperty(ip)) {
-      that = db[ip] = {ip: ip, start: now, reset: now+options.duration, limit: options.max}
+      that = db[ip] = {ip: ip, start: now, reset: reset, limit: options.max}
       debug('adds %s to database', ip);
     } else {
       debug('get %s from database', ip);
