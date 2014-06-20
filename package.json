@@ -1,6 +1,6 @@
 {
   "name": "koa-better-ratelimit",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Better, smaller, faster. KoaJS requests rate limiter middleware, with in-memory store/db.",
   "scripts": {
     "start": "make start",
@@ -14,7 +14,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/tunnckoCore/gulp-j140.git"
+    "url": "git://github.com/tunnckoCore/koa-better-ratelimit.git"
   },
   "keywords": [
     "koa",
