@@ -17,7 +17,7 @@ $ npm install koa-better-ratelimit
 - `whiteList` **{Array}** All ips that won't be limited, default `empty array`
 - `blackList` **{Array}** All ips that always be limited and 403, default `empty array`
 - `message_429` **{String}** Message for all requests after limit, default `429: Too Many Requests.`
-- `message_403` **{String}** Message for limited/forbidden 403, default `403: This is forbidden area for you.`
+- `message_403` **{String}** Message for limited/forbidden, default `403: This is forbidden area for you.`
 - `max` **{Integer}** Max requests per ip, default `500`
 - `env` **{Boolean}** Manage enviroment, for tests will use `x-koaip` header, default `null`
 
