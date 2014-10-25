@@ -1,10 +1,8 @@
 /**
- * koa-better-ratelimit - index.js
- * Copyright(c) 2014
- * MIT Licensed
+ * koa-better-ratelimit <https://github.com/tunnckoCore/koa-better-ratelimit>
  *
- * @author  Charlike Mike Reagent (@tunnckoCore)
- * @api private
+ * Copyright (c) 2014 Charlike Mike Reagent, contributors.
+ * Released under the MIT license.
  */
 
 'use strict';
@@ -13,11 +11,10 @@
  * Module dependencies.
  */
 
-var ipchecker = require('ipchecker'),
-    debug     = require('debug')('koa-better-ratelimit'),
-    copy      = require('copy-to');
+var ipchecker = require('ipchecker');
+var copy = require('copy-to');
 
-var defaultOptions = {
+var defaults = {
   duration: 1000 * 60 * 60 * 24,
   whiteList: [],
   blackList: [],
@@ -28,12 +25,6 @@ var defaultOptions = {
 };
 
 /**
- * Expose `betterlimit()`.
- */
-
-module.exports = betterlimit;
-
-/**
  * With options through init you can control
  * black/white lists, limit per ip and reset interval.
  * 
@@ -41,12 +32,12 @@ module.exports = betterlimit;
  * @see https://github.com/tunnckoCore/koa-better-ratelimit#options
  * @api public
  */
-function betterlimit(options) {
+module.exports = function betterlimit(options) {
   options = options || {};
 
   var db = {}, that;
 
-  copy(defaultOptions).to(options);
+  copy(defaults).to(options);
 
   var whiteListMap = ipchecker.map(options.whiteList);
   var blackListMap = ipchecker.map(options.blackList);
@@ -56,7 +47,7 @@ function betterlimit(options) {
     var ip = options.env === 'test' ? this.request.header['x-koaip'] : this.ip;
     
     if (!ip) {
-      debug('can not get ip for the request');
+      //debug('can not get ip for the request');
       return yield *next;
     }
 
@@ -64,14 +55,14 @@ function betterlimit(options) {
     var reset = now + ((options.duration / 1000) | 0)
 
     if (ipchecker.check(ip, blackListMap)) {
-      debug('request ip: %s is in the blackList', ip);
+      //debug('request ip: %s is in the blackList', ip);
       this.status = 403;
       this.body = options.message_403;
       return;
     }
 
     if (ipchecker.check(ip, whiteListMap)) {
-      debug('request ip: %s is in the whiteList', ip);
+      //debug('request ip: %s is in the whiteList', ip);
       return yield *next;
     }
 
@@ -79,9 +70,9 @@ function betterlimit(options) {
 
     if (isEmpty(db) || !db.hasOwnProperty(ip)) {
       that = db[ip] = {ip: ip, start: now, reset: reset, limit: options.max}
-      debug('adds %s to database', ip);
+      //debug('adds %s to database', ip);
     } else {
-      debug('get %s from database', ip);
+      //debug('get %s from database', ip);
       that = db[ip];
     }
 
@@ -90,7 +81,7 @@ function betterlimit(options) {
       this.set('X-RateLimit-Remaining', that.limit);
       this.set('X-RateLimit-Reset', that.reset);
 
-      debug('ip %s have access', ip);
+      //debug('ip %s have access', ip);
       return yield *next;
     } else {
       this.status = 429;
@@ -98,7 +89,7 @@ function betterlimit(options) {
       this.set('Retry-After', that.reset-now);
       this.set('X-RateLimit-Remaining', 0);
       this.set('X-RateLimit-Reset', that.reset);
-      debug('ip %s don`t have access, until %s', ip, that.reset);
+      //debug('ip %s don`t have access, until %s', ip, that.reset);
     }
   }
 }

@@ -1,13 +1,14 @@
 /**
- * koa-better-ratelimit - example.js
- * Copyright(c) 2014
- * MIT Licensed
+ * koa-better-ratelimit <https://github.com/tunnckoCore/koa-better-ratelimit>
  *
- * @author  Charlike Mike Reagent (@tunnckoCore)
- * @api private
+ * Copyright (c) 2014 Charlike Mike Reagent, contributors.
+ * Released under the MIT license.
  */
-var app   = require('koa')(),
-    limit = require('./index');
+
+'use strict';
+
+var app   = require('koa')();
+var limit = require('./index');
 
 app.use(limit({
   duration: 1000 * 60 * 3, //3 mins
