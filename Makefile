@@ -3,7 +3,7 @@ install:
 
 lint:
 	$(MAKE) install
-	./node_modules/.bin/jshint **/*.js
+	./node_modules/.bin/jshint ./*.js
 
 test:
 	$(MAKE) lint
