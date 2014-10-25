@@ -1,5 +1,5 @@
 # better-ratelimit [![NPM version][npmjs-shields]][npmjs-url] [![Build Status][travis-img]][travis-url] [![Dependency Status][depstat-img]][depstat-url] [![Coveralls][coveralls-shields]][coveralls-url]
-> Better, smaller, faster. KoaJS middleware for limit request by ip, store in-memory.
+> Better, smaller, faster - [koa][koa-url] middleware for limit request by ip, store in-memory.
 
 ## Install [![Nodei.co stats][npmjs-install]][npmjs-url]
 > Install with [npm](https://npmjs.org)
