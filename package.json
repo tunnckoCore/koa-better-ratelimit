@@ -1,6 +1,6 @@
 {
   "name": "koa-better-ratelimit",
-  "version": "0.1.1",
+  "version": "1.0.0",
   "description": "Better, smaller, faster - koa middleware for limit request by ip, store in-memory.",
   "main": "index.js",
   "scripts": {
