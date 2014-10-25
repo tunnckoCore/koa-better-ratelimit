@@ -2,6 +2,7 @@
   "name": "koa-better-ratelimit",
   "version": "0.1.1",
   "description": "Better, smaller, faster. KoaJS requests rate limiter middleware, with in-memory store/db.",
+  "main": "index.js",
   "scripts": {
     "lint": "npm install && ./node_modules/.bin/jshint ./*.js",
     "test": "npm run lint && NODE_ENV=test ./node_modules/.bin/mocha --require should --harmony-generators",
@@ -9,14 +10,14 @@
     "test-travis": "npm run lint && NODE_ENV=test node --harmony-generators node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha --report lcovonly -- -u exports --require should"
   },
   "author": {
-    "name": "Charlike Mike Reagent",
+    "name": "Charlike Make Reagent",
     "email": "mameto_100@mail.bg",
-    "url": "http://www.whistle-bg.tk",
-    "twitter": "tunnckoCore"
+    "url": "https://github.com/tunnckoCore",
+    "twitter": "https://twitter.com/tunnckoCore"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/tunnckoCore/koa-better-ratelimit.git"
+    "url": "git://github.com/tunnckoCore/pkg-open.git"
   },
   "keywords": [
     "koa",
@@ -28,19 +29,8 @@
     "memorystore",
     "rate"
   ],
-  "files": [
-    ".gitignore",
-    ".npmignore",
-    ".travis.yml",
-    "LICENSE",
-    "Makefile",
-    "README.md",
-    "example.js",
-    "index.js",
-    "test.js"
-  ],
   "dependencies": {
-    "extend": "*",
+    "copy-to": "*",
     "ipchecker": "*"
   },
   "devDependencies": {
@@ -53,5 +43,8 @@
     "istanbul-harmony": "~0.3.0",
     "jshint": "*"
   },
-  "license": "MIT"
+  "licenses": [{
+    "type": "MIT",
+    "url": "https://github.com/tunnckoCore/koa-better-ratelimit/blob/master/license.md"
+  }]
 }

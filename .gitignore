@@ -1,42 +1,37 @@
-# These settings are for any web project
-# Handle line endings automatically for files detected as text
-# and leave all files detected as binary untouched.
+# Numerous always-ignore extensions
+*~
+*.csv
+*.dat
+*.diff
+*.err
+*.gz
+*.log
+*.orig
+*.out
+*.pid
+*.rar
+*.rej
+*.seed
+*.swo
+*.swp
+*.vi
+*.yo-rc.json
+*.zip
+*.coveralls.yml
+*.idea
 
-* text=auto
+# Always-ignore dirs and files
+_gh_pages
+node_modules
+bower_components
+components
+vendor
+lib-cov
+coverage
+nbproject
+cache
+temp
+tmp
 
-#
-# The above will handle all files NOT found below
-# These files are text and should be normalized (Convert crlf => lf)
-# 
-
-*.php text
-*.css text
-*.js text
-*.htm text
-*.html text
-*.xml text
-*.txt text
-*.ini text
-*.inc text
-.htaccess text
-
-#
-# These files are binary and should be left untouched
-# (binary is a macro for -text -diff)
-#
-
-*.png binary
-*.jpg binary
-*.jpeg binary
-*.gif binary
-*.ico binary
-*.mov binary
-*.mp4 binary
-*.mp3 binary
-*.flv binary
-*.fla binary
-*.swf binary
-*.gz binary
-*.zip binary
-*.7z binary
-*.ttf binary
+npm-debug.log
+Thumbs.db
