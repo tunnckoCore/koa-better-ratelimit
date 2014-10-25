@@ -22,5 +22,5 @@ app.use(function * (next) {
 });
 
 var port = process.env.PORT || 3333;
-app.listen(3333);
+app.listen(port);
 console.log('Koa server start listening on port ' + port);
