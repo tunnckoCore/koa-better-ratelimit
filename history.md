@@ -1,3 +1,7 @@
+## v1.0.1 / October 25, 2014
+- fix typos
+- fix package.json
+
 ## v1.0.0 / October 25, 2014
 - initial release
 
