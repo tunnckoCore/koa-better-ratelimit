@@ -11,7 +11,7 @@ var app   = require('koa')();
 var limit = require('./index');
 
 app.use(limit({
-  duration: 1000 * 60 * 3, //3 mins
+  duration: 30000, //30 seconds
   max: 5,
   //blackList: ['127.0.0.1']
 }));
