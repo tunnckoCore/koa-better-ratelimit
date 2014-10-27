@@ -11,7 +11,7 @@ $ npm install koa-better-ratelimit
 ## Options
 > With options through init you can control black/white lists, limit per ip and reset interval.
 
-- `duration` **{Integer}** Limit duration in seconds, default `1000 * 60 * 60 * 1` (1 hour)
+- `duration` **{Integer}** Limit duration in milliseconds, default `1000 * 60 * 60 * 1` (1 hour)
 - `whiteList` **{Array}** All ips that won't be limited, default `empty array`
 - `blackList` **{Array}** All ips that always be limited and 403, default `empty array`
 - `message_429` **{String}** Message for all requests after limit, default `429: Too Many Requests.`
