@@ -1,3 +1,6 @@
+## v2.0.1 / October 27, 2014
+- typo in readme, `options.duration` is in milliseconds
+
 ## v2.0.0 / October 27, 2014
 - remove `copy-to` dependency
 - full rewrite
