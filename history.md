@@ -1,3 +1,9 @@
+## v2.0.0 / October 27, 2014
+- remove `copy-to` dependency
+- full rewrite
+- fix wrong behaving - now works correctly
+- MAY break someone's behaving
+
 ## v1.0.1 / October 25, 2014
 - fix typos
 - fix package.json
