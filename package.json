@@ -1,7 +1,7 @@
 {
   "name": "koa-better-ratelimit",
   "description": "Better, smaller, faster - koa middleware for limit request by ip, store in-memory.",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "scripts": {
     "lint": "npm install && node_modules/.bin/jshint . && node_modules/.bin/jscs . --reporter inline --esnext",
     "test": "npm run lint && node_modules/.bin/mocha --harmony-generators --require should",
