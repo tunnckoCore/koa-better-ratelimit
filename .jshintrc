@@ -5,7 +5,7 @@
   "maxparams"     : 3,
   "maxdepth"      : 3,
   "maxstatements" : 35,
-  "maxlen"        : 80,
+  "maxlen"        : 120,
 
   "camelcase"     : false,
   "forin"         : false,
