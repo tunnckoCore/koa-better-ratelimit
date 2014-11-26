@@ -15,9 +15,13 @@
 - initial release
 
 
+
 [npmjs-url]: http://npm.im/koa-better-ratelimit
 [npmjs-shields]: http://img.shields.io/npm/v/koa-better-ratelimit.svg
 [npmjs-install]: https://nodei.co/npm/koa-better-ratelimit.svg?mini=true
+
+[coveralls-url]: https://coveralls.io/r/tunnckoCore/koa-better-ratelimit?branch=master
+[coveralls-shields]: https://img.shields.io/coveralls/tunnckoCore/koa-better-ratelimit.svg
 
 [license-url]: https://github.com/tunnckoCore/koa-better-ratelimit/blob/master/license.md
 [license-img]: http://img.shields.io/badge/license-MIT-blue.svg
@@ -36,12 +40,4 @@
 [author-website]: http://www.whistle-bg.tk
 [author-npmjs]: https://npmjs.org/~tunnckocore
 
-[cobody-url]: https://github.com/visionmedia/co-body
-[mocha-url]: https://github.com/visionmedia/mocha
-[rawbody-url]: https://github.com/stream-utils/raw-body
-[multer-url]: https://github.com/expressjs/multer
-[koa-router-url]: https://github.com/alexmingoia/koa-router
 [koa-url]: https://github.com/koajs/koa
-[formidable-url]: https://github.com/felixge/node-formidable
-[co-url]: https://github.com/visionmedia/co
-[extend-url]: https://github.com/justmoon/node-extend

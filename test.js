@@ -16,15 +16,16 @@ var limit = require('./index');
 var request = require('supertest');
 var http = require('http');
 
-function *hello(next) {
-  this.set('content-type', 'text/html')
-  this.body = '<p>Hello test.</p>';
-  yield* next;
+function helloMiddleware() {
+  return function * hello(next) {
+    this.response.type = 'text/html'
+    this.response.body = '<p>Hello test.</p>';
+    yield * next;
+  }
 }
 
 /**
- * [appNonDefault description]
- * @type {[type]}
+ * appNonDefault description
  */
 var appNonDefault = koa();
 appNonDefault.use(limit({
@@ -32,27 +33,23 @@ appNonDefault.use(limit({
   max: 3, //max requests
   env: 'test'
 }));
-appNonDefault.use(hello);
+appNonDefault.use(helloMiddleware());
 appNonDefault = http.createServer(appNonDefault.callback());
 
-
 /**
- * [appBlack description]
- * @type {[type]}
+ * appBlack description
  */
 var appBlack = koa();
 appBlack.use(limit({
   blackList: ['4.4.1.*'],
-  message_403: 'access forbidden, please contact foo@bar.com',
+  accessForbidden: 'access forbidden, please contact foo@bar.com',
   env: 'test'
 }));
-appBlack.use(hello);
+appBlack.use(helloMiddleware());
 appBlack = http.createServer(appBlack.callback());
 
-
 /**
- * [appWhite description]
- * @type {[type]}
+ * appWhite description
  */
 var appWhite = koa();
 appWhite.use(limit({
@@ -60,11 +57,11 @@ appWhite.use(limit({
   max: 50,
   env: 'test'
 }));
-appWhite.use(hello);
+appWhite.use(helloMiddleware());
 appWhite = http.createServer(appWhite.callback());
 
-describe('appNonDefault', function () {
-  it('should status 200 - 1.2.3.4 - remaining 2/3', function (done) {
+describe('appNonDefault', function() {
+  it('should status 200 - 1.2.3.4 - remaining 2/3', function(done) {
     request(appNonDefault)
     .get('/')
     .set('x-koaip', '1.2.3.4')
@@ -73,7 +70,7 @@ describe('appNonDefault', function () {
     .expect('X-RateLimit-Remaining', '2')
     .end(done);
   });
-  it('should status 200 - 1.2.3.4 - remaining 1/3', function (done) {
+  it('should status 200 - 1.2.3.4 - remaining 1/3', function(done) {
     request(appNonDefault)
     .get('/')
     .set('x-koaip', '1.2.3.4')
@@ -82,7 +79,7 @@ describe('appNonDefault', function () {
     .expect('X-RateLimit-Remaining', '1')
     .end(done);
   });
-  it('should status 200 - 1.2.3.4 - remaining 0/3', function (done) {
+  it('should status 200 - 1.2.3.4 - remaining 0/3', function(done) {
     request(appNonDefault)
     .get('/')
     .set('x-koaip', '1.2.3.4')
@@ -91,7 +88,7 @@ describe('appNonDefault', function () {
     .expect('X-RateLimit-Remaining', '0')
     .end(done);
   });
-  it('should status 429 - 1.2.3.4 - remaining 0/3 /1', function (done) {
+  it('should status 429 - 1.2.3.4 - remaining 0/3 /1', function(done) {
     request(appNonDefault)
     .get('/')
     .set('x-koaip', '1.2.3.4')
@@ -100,7 +97,7 @@ describe('appNonDefault', function () {
     .expect('X-RateLimit-Remaining', '0')
     .end(done);
   });
-  it('should status 200 - 8.8.8.8 - remaining 2/3', function (done) {
+  it('should status 200 - 8.8.8.8 - remaining 2/3', function(done) {
     request(appNonDefault)
     .get('/')
     .set('x-koaip', '8.8.8.8')
@@ -109,7 +106,7 @@ describe('appNonDefault', function () {
     .expect('X-RateLimit-Remaining', '2')
     .end(done);
   });
-  it('should status 200 - 8.8.8.8 - remaining 1/3', function (done) {
+  it('should status 200 - 8.8.8.8 - remaining 1/3', function(done) {
     request(appNonDefault)
     .get('/')
     .set('x-koaip', '8.8.8.8')
@@ -118,7 +115,7 @@ describe('appNonDefault', function () {
     .expect('X-RateLimit-Remaining', '1')
     .end(done);
   });
-  it('should status 429 - 1.2.3.4 - remaining 0/3 /2', function (done) {
+  it('should status 429 - 1.2.3.4 - remaining 0/3 /2', function(done) {
     request(appNonDefault)
     .get('/')
     .set('x-koaip', '1.2.3.4')
@@ -127,7 +124,7 @@ describe('appNonDefault', function () {
     .expect('X-RateLimit-Remaining', '0')
     .end(done);
   });
-  it('should status 200 - 8.8.8.8 - remaining 0/3', function (done) {
+  it('should status 200 - 8.8.8.8 - remaining 0/3', function(done) {
     request(appNonDefault)
     .get('/')
     .set('x-koaip', '8.8.8.8')
@@ -136,7 +133,7 @@ describe('appNonDefault', function () {
     .expect('X-RateLimit-Remaining', '0')
     .end(done);
   });
-  it('should status 429 - 8.8.8.8 - remaining 0/3', function (done) {
+  it('should status 429 - 8.8.8.8 - remaining 0/3', function(done) {
     request(appNonDefault)
     .get('/')
     .set('x-koaip', '8.8.8.8')
@@ -147,8 +144,8 @@ describe('appNonDefault', function () {
   });
 });
 
-describe('appBlackList', function () {
-  it('should 403 Forbidden - blackList', function (done) {
+describe('appBlackList', function() {
+  it('should 403 Forbidden - blackList', function(done) {
     request(appBlack)
     .get('/')
     .set('x-koaip', '4.4.1.8')
@@ -157,8 +154,8 @@ describe('appBlackList', function () {
   });
 });
 
-describe('appWhiteList', function () {
-  it('should 200 OK - whiteList - no limits', function (done) {
+describe('appWhiteList', function() {
+  it('should 200 OK - whiteList - no limits', function(done) {
     request(appWhite)
     .get('/')
     .set('x-koaip', '127.0.4.4')

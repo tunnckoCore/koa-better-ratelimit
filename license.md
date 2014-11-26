@@ -1,4 +1,4 @@
-Copyright (c) 2014 [Charlike Mike Reagent][author-website], [contributors](https://github.com/tunnckoCore/koa-better-ratelimit/graphs/contributors).  
+Copyright (c) 2014 [Charlike Make Reagent][author-website], [contributors](https://github.com/tunnckoCore/koa-better-ratelimit/graphs/contributors).  
 
 Permission is hereby granted, free of charge, to any person
 obtaining a copy of this software and associated documentation
@@ -27,6 +27,9 @@ OTHER DEALINGS IN THE SOFTWARE.
 [npmjs-shields]: http://img.shields.io/npm/v/koa-better-ratelimit.svg
 [npmjs-install]: https://nodei.co/npm/koa-better-ratelimit.svg?mini=true
 
+[coveralls-url]: https://coveralls.io/r/tunnckoCore/koa-better-ratelimit?branch=master
+[coveralls-shields]: https://img.shields.io/coveralls/tunnckoCore/koa-better-ratelimit.svg
+
 [license-url]: https://github.com/tunnckoCore/koa-better-ratelimit/blob/master/license.md
 [license-img]: http://img.shields.io/badge/license-MIT-blue.svg
 
@@ -44,12 +47,4 @@ OTHER DEALINGS IN THE SOFTWARE.
 [author-website]: http://www.whistle-bg.tk
 [author-npmjs]: https://npmjs.org/~tunnckocore
 
-[cobody-url]: https://github.com/visionmedia/co-ratelimit
-[mocha-url]: https://github.com/visionmedia/mocha
-[rawbody-url]: https://github.com/stream-utils/raw-ratelimit
-[multer-url]: https://github.com/expressjs/multer
-[koa-router-url]: https://github.com/alexmingoia/koa-router
 [koa-url]: https://github.com/koajs/koa
-[formidable-url]: https://github.com/felixge/node-formidable
-[co-url]: https://github.com/visionmedia/co
-[extend-url]: https://github.com/justmoon/node-extend

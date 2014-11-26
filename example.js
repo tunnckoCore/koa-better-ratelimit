@@ -12,11 +12,11 @@ var limit = require('./index');
 
 app.use(limit({
   duration: 30000, //30 seconds
-  max: 5,
+  max: 5
   //blackList: ['127.0.0.1']
 }));
 
-app.use(function * (next) {
+app.use(function * helloWorld(next) {
   this.body = 'Hello World';
   yield next;
 });
