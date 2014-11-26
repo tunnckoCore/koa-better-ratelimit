@@ -27,9 +27,6 @@ var defaults = {
  * With options through init you can control
  * black/white lists, limit per ip and reset interval.
  *
- * @todo >=v2.2.x jscs: "requireCamelCaseOrUpperCaseIdentifiers: true"
- * @todo >=v2.2.x jshintrc: "camelcase: true"
- *
  * @param {Object} options
  * @api public
  */

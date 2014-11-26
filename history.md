@@ -1,3 +1,13 @@
+## v2.1.0 / November 27, 2014
+- enforce new code style
+  - add jshint, jshintignore, jscs (using jscs-jsdoc)
+  - normalizing all @tunnckoCore packages
+  - add/edit dotfiles 
+- option `message_429` deprecated, it will be remove in **v2.2.x**, use `accessLimited`
+- option `message_403` deprecated, it will be remove in **v2.2.x**, use `accessForbidden`
+- _>=v2.2.x jscs: "requireCamelCaseOrUpperCaseIdentifiers: true"_
+- _>=v2.2.x jshint: "camelcase: true"_
+
 ## v2.0.1 / October 27, 2014
 - typo in readme, `options.duration` is in milliseconds
 
