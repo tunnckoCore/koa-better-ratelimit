@@ -1,3 +1,7 @@
+## v2.1.2 / November 27, 2014
+- bump to `jscs >= 1.8.0` and `jscs-doc >= 0.2.0`
+- update semver range
+
 ## v2.1.1 / November 27, 2014
 - fix code style collisions
 
