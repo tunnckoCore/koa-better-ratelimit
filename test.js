@@ -7,7 +7,6 @@
 
 'use strict';
 
-var lab = exports.lab = require('lab').script();
 var koa = require('koa');
 var http = require('http');
 var limit = require('./index');

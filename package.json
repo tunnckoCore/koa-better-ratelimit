@@ -4,8 +4,9 @@
   "version": "2.1.2",
   "scripts": {
     "lint": "jshint index.js && jscs index.js --reporter inline",
-    "test": "lab test.js -cv",
-    "test-travis": "istanbul cover _mocha"
+    "test": "mocha",
+    "test-cov": "istanbul cover _mocha",
+    "test-travis": "istanbul cover _mocha --report lcovonly"
   },
   "author": {
     "name": "Charlike Make Reagent",
@@ -36,7 +37,6 @@
   },
   "devDependencies": {
     "koa": "^0.18.1",
-    "lab": "^5.5.0",
     "mocha": "^2.2.1",
     "supertest": "^0.15.0"
   },
