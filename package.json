@@ -3,11 +3,9 @@
   "description": "Better, smaller, faster - koa middleware for limit request by ip, store in-memory.",
   "version": "2.1.2",
   "scripts": {
-    "lint": "npm install && node_modules/.bin/jshint . && node_modules/.bin/jscs . --reporter inline --esnext",
-    "test": "npm run lint && node_modules/.bin/mocha --harmony-generators --require should",
-    "test-cov": "npm run lint && node --harmony node_modules/.bin/istanbul cover node_modules/.bin/_mocha -- --require should",
-    "test-travis": "npm run lint && node --harmony node_modules/.bin/istanbul cover node_modules/.bin/_mocha --report lcovonly -- --require should",
-    "coveralls": "npm run test-travis && cat coverage/lcov.info | node_modules/.bin/coveralls"
+    "lint": "jshint index.js && jscs index.js --reporter inline",
+    "test": "lab test.js -cv",
+    "test-travis": "istanbul cover _mocha"
   },
   "author": {
     "name": "Charlike Make Reagent",
@@ -33,20 +31,14 @@
     "url": "https://github.com/tunnckoCore/koa-better-ratelimit/blob/master/license.md"
   },
   "dependencies": {
-    "ipchecker": "*"
+    "arr-filter": "^1.1.0",
+    "extend-shallow": "^1.1.2"
   },
   "devDependencies": {
-    "koa": "*",
-    "should": "*",
-    "supertest": "*",
-
-    "coveralls": "^2.11.2",
-    "istanbul-harmony": "^0.3.1",
-    "jscs": ">=1.8.0",
-    "jscs-jsdoc": ">=0.2.0",
-    "jshint": "^2.5.10",
-    "mocha": "^2.0.1",
-    "mocha-lcov-reporter": "0.0.1"
+    "koa": "^0.18.1",
+    "lab": "^5.5.0",
+    "mocha": "^2.2.1",
+    "supertest": "^0.15.0"
   },
   "engines": {
     "node": ">= 0.11.14",

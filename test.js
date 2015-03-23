@@ -1,20 +1,18 @@
 /**
  * koa-better-ratelimit <https://github.com/tunnckoCore/koa-better-ratelimit>
  *
- * Copyright (c) 2014 Charlike Mike Reagent, contributors.
+ * Copyright (c) 2014-2015 Charlike Mike Reagent, contributors.
  * Released under the MIT license.
  */
 
 'use strict';
 
-/**
- * Module dependencies.
- */
-
+var lab = exports.lab = require('lab').script();
 var koa = require('koa');
-var limit = require('./index');
-var request = require('supertest');
 var http = require('http');
+var limit = require('./index');
+var assert = require('assert');
+var request = require('supertest');
 
 function helloMiddleware() {
   return function * hello(next) {
@@ -24,14 +22,19 @@ function helloMiddleware() {
   }
 }
 
+var describe = lab.describe
+var it = lab.it
+
 /**
  * appNonDefault description
  */
 var appNonDefault = koa();
 appNonDefault.use(limit({
-  duration: 1000 * 60, //1 min
-  max: 3, //max requests
-  env: 'test'
+  duration: 1000 * 60, // 1 min
+  max: 3, // max requests
+  id: function(ctx) {
+    return ctx.request.header['x-koaip'];
+  }
 }));
 appNonDefault.use(helloMiddleware());
 appNonDefault = http.createServer(appNonDefault.callback());
@@ -41,9 +44,11 @@ appNonDefault = http.createServer(appNonDefault.callback());
  */
 var appBlack = koa();
 appBlack.use(limit({
-  blackList: ['4.4.1.*'],
+  blackList: ['4.4.1.8'], // @todo: as of 2.2.x, no more wildecards...
   accessForbidden: 'access forbidden, please contact foo@bar.com',
-  env: 'test'
+  id: function(ctx) {
+    return ctx.request.header['x-koaip'];
+  }
 }));
 appBlack.use(helloMiddleware());
 appBlack = http.createServer(appBlack.callback());
@@ -53,9 +58,11 @@ appBlack = http.createServer(appBlack.callback());
  */
 var appWhite = koa();
 appWhite.use(limit({
-  whiteList: ['127.0.*.*'],
+  whiteList: ['127.0.4.4'], // @todo: too limited, not support wildcards
   max: 50,
-  env: 'test'
+  id: function(ctx) {
+    return ctx.request.header['x-koaip'];
+  }
 }));
 appWhite.use(helloMiddleware());
 appWhite = http.createServer(appWhite.callback());
@@ -68,7 +75,12 @@ describe('appNonDefault', function() {
     .expect(200, '<p>Hello test.</p>')
     .expect('X-RateLimit-Limit', '3')
     .expect('X-RateLimit-Remaining', '2')
-    .end(done);
+    .end(function _end(err, res) {
+      assert.ifError(err);
+      assert.strictEqual(res.text, '<p>Hello test.</p>');
+      assert.strictEqual(res.type, 'text/html');
+      done();
+    });
   });
   it('should status 200 - 1.2.3.4 - remaining 1/3', function(done) {
     request(appNonDefault)
@@ -77,7 +89,12 @@ describe('appNonDefault', function() {
     .expect(200, '<p>Hello test.</p>')
     .expect('X-RateLimit-Limit', '3')
     .expect('X-RateLimit-Remaining', '1')
-    .end(done);
+    .end(function _end(err, res) {
+      assert.ifError(err);
+      assert.strictEqual(res.text, '<p>Hello test.</p>');
+      assert.strictEqual(res.type, 'text/html');
+      done();
+    });
   });
   it('should status 200 - 1.2.3.4 - remaining 0/3', function(done) {
     request(appNonDefault)
@@ -86,7 +103,12 @@ describe('appNonDefault', function() {
     .expect(200, '<p>Hello test.</p>')
     .expect('X-RateLimit-Limit', '3')
     .expect('X-RateLimit-Remaining', '0')
-    .end(done);
+    .end(function _end(err, res) {
+      assert.ifError(err);
+      assert.strictEqual(res.text, '<p>Hello test.</p>');
+      assert.strictEqual(res.type, 'text/html');
+      done();
+    });
   });
   it('should status 429 - 1.2.3.4 - remaining 0/3 /1', function(done) {
     request(appNonDefault)
@@ -95,7 +117,11 @@ describe('appNonDefault', function() {
     .expect(429, '429: Too Many Requests.')
     .expect('X-RateLimit-Limit', '3')
     .expect('X-RateLimit-Remaining', '0')
-    .end(done);
+    .end(function _end(err, res) {
+      assert.ifError(err);
+      assert.strictEqual(res.type, 'text/plain');
+      done();
+    });
   });
   it('should status 200 - 8.8.8.8 - remaining 2/3', function(done) {
     request(appNonDefault)

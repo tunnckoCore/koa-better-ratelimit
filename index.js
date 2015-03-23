@@ -7,11 +7,8 @@
 
 'use strict';
 
-/**
- * Module dependencies.
- */
-
-var ipchecker = require('ipchecker');
+var extend = require('extend-shallow');
+var filter = require('arr-filter');
 
 var defaults = {
   duration: 1000 * 60 * 60 * 24,
@@ -20,81 +17,75 @@ var defaults = {
   accessLimited: '429: Too Many Requests.',
   accessForbidden: '403: This is forbidden area for you.',
   max: 500,
-  env: null
+  id: null
 };
 
 /**
  * With options through init you can control
  * black/white lists, limit per ip and reset interval.
  *
- * @param {Object} options
+ * @param {Object} `opts`
  * @api public
  */
-module.exports = function betterlimit(options) {
-  options = options || {};
+module.exports = function betterlimit(opts) {
+  opts = extend({}, defaults, opts);
 
   var db = {};
 
-  for (var key in defaults) {
-    if (!options[key]) {options[key] = defaults[key]}
-  }
-
-  if (options.message_429) {
-    options.accessLimited = options.message_429;
-  }
-
-  if (options.message_403) {
-    options.accessForbidden = options.message_403;
-  }
-
-  var whiteListMap = ipchecker.map(options.whiteList);
-  var blackListMap = ipchecker.map(options.blackList);
-
   return function * ratelimit(next) {
-    var ip = options.env === 'test' ? this.request.header['x-koaip'] : this.ip;
+    var id = opts.id ? opts.id(this) : this.ip;
 
-    if (!ip) {
+    if (!id) {
       return yield * next;
     }
-    if (ipchecker.check(ip, blackListMap)) {
+    
+    var blackFilter = filter(opts.blackList, function _blackFilter(item) {
+      return item === id;
+    });
+    if (blackFilter.length > 0) {
       this.response.status = 403;
-      this.response.body = options.accessForbidden;
+      this.response.body = opts.accessForbidden;
       return;
     }
-    if (ipchecker.check(ip, whiteListMap)) {
+
+    var whiteFilter = filter(opts.whiteList, function _whiteFilter(item) {
+      return item === id;
+    });
+
+    if (whiteFilter.length > 0) {
       return yield * next;
     }
 
     var now = Date.now()
-    var reset = now + options.duration;
+    var reset = now + opts.duration;
 
-    if (!db.hasOwnProperty(ip)) {
-      db[ip] = {ip: ip, reset: reset, limit: options.max}
+    if (!db.hasOwnProperty(id)) {
+      db[id] = {ip: id, reset: reset, limit: opts.max}
     }
 
-    var delta = db[ip].reset - now
+    var delta = db[id].reset - now
     var retryAfter = delta / 1000 | 0;
 
-    db[ip].limit = db[ip].limit - 1
-    this.response.set('X-RateLimit-Limit', options.max);
+    db[id].limit = db[id].limit - 1
+    this.response.set('X-RateLimit-Limit', opts.max);
 
-    if (db[ip].reset > now) {
-      var rateLimiting = db[ip].limit < 0 ? 0 : db[ip].limit;
+    if (db[id].reset > now) {
+      var rateLimiting = db[id].limit < 0 ? 0 : db[id].limit;
       this.response.set('X-RateLimit-Remaining', rateLimiting);
     }
 
-    if (db[ip].limit < 0 && db[ip].reset < now) {
-      db[ip] = {ip: ip, reset: reset, limit: options.max}
-      db[ip].limit = db[ip].limit - 1;
-      this.response.set('X-RateLimit-Remaining', db[ip].limit);
+    if (db[id].limit < 0 && db[id].reset < now) {
+      db[id] = {ip: id, reset: reset, limit: opts.max}
+      db[id].limit = db[id].limit - 1;
+      this.response.set('X-RateLimit-Remaining', db[id].limit);
     }
 
-    this.response.set('X-RateLimit-Reset', db[ip].reset);
+    this.response.set('X-RateLimit-Reset', db[id].reset);
 
-    if (db[ip].limit < 0) {
+    if (db[id].limit < 0) {
       this.response.set('Retry-After', retryAfter);
       this.response.status = 429;
-      this.response.body = options.accessLimited
+      this.response.body = opts.accessLimited
       return;
     }
 
