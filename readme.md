@@ -1,4 +1,5 @@
-# better-ratelimit [![NPM version][npmjs-shields]][npmjs-url] [![Build Status][travis-img]][travis-url] [![Dependency Status][depstat-img]][depstat-url] [![Coveralls][coveralls-shields]][coveralls-url]
+## [![npm][npmjs-img]][npmjs-url][![mit license][npmjs-license]][license-url][![using ferver versioning][ferver-img]][ferver-url][![build status][travis-img]][travis-url][![coverage status][coveralls-img]][coveralls-url][![deps status][daviddm-img]][daviddm-url]
+
 > Better, smaller, faster - [koa][koa-url] middleware for limit request by ip, store in-memory.
 
 
@@ -82,32 +83,42 @@ console.log('Koa server start listening on port ' + port);
 + [npmjs/tunnckoCore][author-npmjs]
 
 
-## License [![MIT license][license-img]][license-url]
-Copyright (c) 2014 [Charlike Make Reagent][author-website], [contributors](https://github.com/tunnckoCore/koa-better-ratelimit/graphs/contributors).  
+## License [![MIT license][npmjs-license]][license-url]
+Copyright (c) 2014-2015 [Charlike Mike Reagent][contrib-more], [contributors][contrib-graf].  
 Released under the [`MIT`][license-url] license.
 
+
 [npmjs-url]: http://npm.im/koa-better-ratelimit
-[npmjs-shields]: http://img.shields.io/npm/v/koa-better-ratelimit.svg
-[npmjs-install]: https://nodei.co/npm/koa-better-ratelimit.svg?mini=true
+[npmjs-img]: https://img.shields.io/npm/v/koa-better-ratelimit.svg?style=flat-square&label=koa-better-ratelimit
+
+[npmjs-dw]: https://img.shields.io/npm/dm/koa-better-ratelimit.svg?style=flat-square
+[npmjs-license]: https://img.shields.io/npm/l/koa-better-ratelimit.svg?style=flat-square
 
 [coveralls-url]: https://coveralls.io/r/tunnckoCore/koa-better-ratelimit?branch=master
-[coveralls-shields]: https://img.shields.io/coveralls/tunnckoCore/koa-better-ratelimit.svg
+[coveralls-img]: https://img.shields.io/coveralls/tunnckoCore/koa-better-ratelimit.svg?style=flat-square
 
 [license-url]: https://github.com/tunnckoCore/koa-better-ratelimit/blob/master/license.md
-[license-img]: http://img.shields.io/badge/license-MIT-blue.svg
+[license-img]: https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square
+
+[ferver-url]: https://github.com/jonathanong/ferver
+[ferver-img]: https://img.shields.io/badge/using-ferver-blue.svg?style=flat-square
 
 [travis-url]: https://travis-ci.org/tunnckoCore/koa-better-ratelimit
-[travis-img]: https://travis-ci.org/tunnckoCore/koa-better-ratelimit.svg?branch=master
+[travis-img]: https://img.shields.io/travis/tunnckoCore/koa-better-ratelimit.svg?style=flat-square
 
-[depstat-url]: https://david-dm.org/tunnckoCore/koa-better-ratelimit
-[depstat-img]: https://david-dm.org/tunnckoCore/koa-better-ratelimit.svg
+[daviddm-url]: https://david-dm.org/tunnckoCore/koa-better-ratelimit
+[daviddm-img]: https://img.shields.io/david/tunnckoCore/koa-better-ratelimit.svg?style=flat-square
 
-[author-gittip-img]: http://img.shields.io/gittip/tunnckoCore.svg
-[author-gittip]: https://www.gittip.com/tunnckoCore
-[author-github]: https://github.com/tunnckoCore
+[author-gratipay]: https://gratipay.com/tunnckoCore
 [author-twitter]: https://twitter.com/tunnckoCore
-
-[author-website]: http://www.whistle-bg.tk
+[author-github]: https://github.com/tunnckoCore
 [author-npmjs]: https://npmjs.org/~tunnckocore
 
+[contrib-more]: http://j.mp/1stW47C
+[contrib-graf]: https://github.com/tunnckoCore/koa-better-ratelimit/graphs/contributors
+
 [koa-url]: https://github.com/koajs/koa
+
+***
+
+_Powered and automated by [kdf](https://github.com/tunnckoCore), March 24, 2015_

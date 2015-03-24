@@ -21,9 +21,6 @@ function helloMiddleware() {
   }
 }
 
-var describe = lab.describe
-var it = lab.it
-
 /**
  * appNonDefault description
  */
