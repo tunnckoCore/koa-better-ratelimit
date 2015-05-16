@@ -2,6 +2,7 @@
 
 > Better, smaller, faster - [koa][koa-url] middleware for limit request by ip, store in-memory.
 
+### [upcoming v3](https://github.com/tunnckoCore/koa-better-ratelimit/milestones/v3)
 
 ## Install [![Nodei.co stats][npmjs-install]][npmjs-url]
 > Install with [npm](https://npmjs.org)
