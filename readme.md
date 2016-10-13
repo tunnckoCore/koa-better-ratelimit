@@ -105,7 +105,7 @@ Released under the [`MIT`][license-url] license.
 [ferver-img]: https://img.shields.io/badge/using-ferver-blue.svg?style=flat-square
 
 [travis-url]: https://travis-ci.org/tunnckoCore/koa-better-ratelimit
-[travis-img]: https://img.shields.io/travis/tunnckoCore/koa-better-ratelimit.svg?style=flat-square
+[travis-img]: https://img.shields.io/travis/tunnckoCore/koa-better-ratelimit/master.svg?style=flat-square
 
 [daviddm-url]: https://david-dm.org/tunnckoCore/koa-better-ratelimit
 [daviddm-img]: https://img.shields.io/david/tunnckoCore/koa-better-ratelimit.svg?style=flat-square
