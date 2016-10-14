@@ -57,7 +57,7 @@ console.log('Koa server start listening on port ' + port);
 * `return` **{GeneratorFunction}**
 
 
-## Diferences
+## Differences
 > Between [koa-better-ratelimit](https://github.com/tunnckoCore/koa-better-ratelimit) and [koa-ratelimit](https://github.com/koajs/ratelimit)
 
 - Support blackList and whiteList options
