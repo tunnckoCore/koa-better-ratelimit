@@ -1,7 +1,7 @@
 {
   "name": "koa-better-ratelimit",
   "version": "2.1.2",
-  "description": "Request limiter by IP or custom ID for your APIs built on [koa][] - works both for v1 and v2.",
+  "description": "Smart and easy request rate limiter for your APIs built on [koa][], using [koa-ip-filter][]. Support custom stores, custom ID, custom error messages and custom headers.",
   "repository": "tunnckoCore/koa-better-ratelimit",
   "author": "Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)",
   "precommit.silent": true,
@@ -20,13 +20,17 @@
     "precommit": "git add --all",
     "commit": "git-cz"
   },
-  "dependencies": {},
+  "dependencies": {
+    "extend-shallow": "^2.0.1",
+    "koa-compose": "^3.1.0",
+    "koa-convert": "^1.2.0",
+    "koa-ip-filter": "^3.0.0"
+  },
   "devDependencies": {
     "commitizen": "^2.8.6",
     "coveralls": "^2.11.12",
     "cz-conventional-changelog": "^1.2.0",
     "koa": "^1.2.4",
-    "koa-better-body": "^3.0.2",
     "koa2": "^2.0.0-alpha.7",
     "mukla": "^0.4.1",
     "nyc": "^8.1.0",
