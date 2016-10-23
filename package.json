@@ -1,48 +1,62 @@
 {
   "name": "koa-better-ratelimit",
-  "description": "Better, smaller, faster - koa middleware for limit request by ip, store in-memory.",
   "version": "2.1.2",
+  "description": "Request limiter by IP or custom ID for your APIs built on [koa][] - works both for v1 and v2.",
+  "repository": "tunnckoCore/koa-better-ratelimit",
+  "author": "Charlike Mike Reagent <@tunnckoCore> (http://www.tunnckocore.tk)",
+  "precommit.silent": true,
+  "main": "index.js",
+  "license": "MIT",
   "scripts": {
-    "lint": "jshint index.js && jscs index.js --reporter inline",
-    "test": "mocha",
-    "test-cov": "istanbul cover _mocha",
-    "test-travis": "istanbul cover _mocha --report lcovonly"
+    "lint": "standard --verbose",
+    "pretest": "npm run lint",
+    "test": "npm run coverage",
+    "posttest": "npm run lint:coverage",
+    "coverage": "nyc node test.js",
+    "lint:coverage": "nyc check-coverage --lines 0 --branches 0 --statements 0 --functions 0",
+    "report-coverage": "nyc report --reporter=text-lcov | coveralls",
+    "prerelease": "npm test",
+    "release": "standard-version --sign --no-verify",
+    "precommit": "git add --all",
+    "commit": "git-cz"
   },
-  "author": {
-    "name": "Charlike Make Reagent",
-    "email": "mameto_100@mail.bg",
-    "url": "https://github.com/tunnckoCore"
-  },
-  "keywords": [
-    "koa",
-    "middleware",
-    "ratelimit",
-    "requestlimit",
-    "limit",
-    "in-memory",
-    "memorystore",
-    "rate"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/tunnckoCore/koa-better-ratelimit.git"
-  },
-  "license": {
-    "type": "MIT",
-    "url": "https://github.com/tunnckoCore/koa-better-ratelimit/blob/master/license.md"
-  },
-  "dependencies": {
-    "arr-filter": "^1.1.0",
-    "extend-shallow": "^1.1.2"
-  },
+  "dependencies": {},
   "devDependencies": {
-    "istanbul-harmony": "^0.3.1",
-    "koa": "^0.18.1",
-    "mocha": "^2.2.1",
-    "supertest": "^0.15.0"
+    "commitizen": "^2.8.6",
+    "coveralls": "^2.11.12",
+    "cz-conventional-changelog": "^1.2.0",
+    "koa": "^1.2.4",
+    "koa-better-body": "^3.0.2",
+    "koa2": "^2.0.0-alpha.7",
+    "mukla": "^0.4.1",
+    "nyc": "^8.1.0",
+    "pre-commit": "^1.1.3",
+    "standard": "^8.0.0",
+    "standard-version": "^2.4.0",
+    "supertest": "^2.0.0"
   },
-  "engines": {
-    "node": ">= 0.11.14",
-    "npm": ">= 1.4.28"
+  "files": [
+    "index.js"
+  ],
+  "keywords": [],
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
+  },
+  "verb": {
+    "run": true,
+    "toc": {
+      "render": true,
+      "method": "preWrite",
+      "maxdepth": 4
+    },
+    "layout": "empty",
+    "tasks": [
+      "readme"
+    ],
+    "lint": {
+      "reflinks": true
+    }
   }
 }
