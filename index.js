@@ -20,30 +20,29 @@ module.exports = function koaBetterRatelimit (opts) {
     ? opts.store
     : {}
 
-  return compose([ipFilter, function (ctx, done) {
+  return compose([ipFilter, function betterRatelimit (ctx, next) {
     const headers = extend({
       remaining: 'X-RateLimit-Remaining',
       reset: 'X-RateLimit-Reset',
       limit: 'X-RateLimit-Limit'
     }, opts.headers)
-
-    opts = extend({
+    const options = extend({
       duration: 1000 * 60 * 60 * 24,
       limited: 'Too Many Requests',
       max: 500
-    }, opts)
+    }, options)
 
     const id = ctx.identifier
     const data = store[id]
     const now = Date.now()
-    const reset = now + opts.duration
+    const reset = now + options.duration
     const needReset = data && data.remaining === false && data.reset < now
 
     if (!store.hasOwnProperty(id) || needReset) {
       store[id] = {
         id: id,
         reset: reset,
-        remaining: opts.max
+        remaining: options.max
       }
     }
 
@@ -54,21 +53,21 @@ module.exports = function koaBetterRatelimit (opts) {
 
     ctx.set(headers.remaining, entry.remaining || 0)
     ctx.set(headers.reset, entry.reset)
-    ctx.set(headers.limit, opts.max)
+    ctx.set(headers.limit, options.max)
 
     if (typeof entry.remaining === 'number') {
-      return done()
+      return next()
     }
 
     const after = entry.reset - (now / 1000) | 0
     ctx.set('Retry-After', after)
 
     ctx.status = 429
-    ctx.body = typeof opts.limited === 'function'
-        ? opts.limited(ctx, entry)
-        : opts.limited
+    ctx.body = typeof options.limited === 'function'
+        ? options.limited(ctx, entry)
+        : options.limited
 
-    if (opts.throw) {
+    if (options.throw) {
       ctx.throw(ctx.status, ctx.body)
     }
   }])
