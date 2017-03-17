@@ -30,7 +30,7 @@ module.exports = function koaBetterRatelimit (opts) {
       duration: 1000 * 60 * 60 * 24,
       limited: 'Too Many Requests',
       max: 500
-    }, options)
+    }, opts)
 
     const id = ctx.identifier
     const data = store[id]
